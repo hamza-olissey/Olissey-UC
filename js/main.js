@@ -1,245 +1,183 @@
-/* ===================================================================
- * Imminent 1.0.0 - Main JS
- *
- * ------------------------------------------------------------------- */
+"use strict";
 
-(function($) {
+window.addEventListener('load', function () {
 
-    "use strict";
-    
-    const cfg = {
-                scrollDuration : 800, // smoothscroll duration
-                mailChimpURL   : 'https://facebook.us8.list-manage.com/subscribe/post?u=cdb7b577e41181934ed6a6a44&amp;id=e6957d85dc' // mailchimp url
-                };
-    const $WIN = $(window);
+    //1. behavior when main menu is visible or hidden
+    var menuCollapse = document.getElementById('navbarMenuCollapse');
+    menuCollapse.addEventListener('shown.bs.collapse', function () {
+        document.body.classList.add('menu-visible');
+    });
+    menuCollapse.addEventListener('hidden.bs.collapse', function () {
+        document.body.classList.remove('menu-visible');
+    });
 
-    // Add the User Agent to the <html>
-    // will be used for IE10/IE11 detection (Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; rv:11.0))
-    const doc = document.documentElement;
-    doc.setAttribute('data-useragent', navigator.userAgent);
+    var bsCollapse = new bootstrap.Collapse(menuCollapse, {
+        toggle: false
+    });
 
-
-   /* preloader
-    * -------------------------------------------------- */
-    const ssPreloader = function() {
-
-        $("html").addClass('ss-preload');
-
-        $WIN.on('load', function() {
-
-            // force page scroll position to top at page refresh
-            // $('html, body').animate({ scrollTop: 0 }, 'normal');
-
-            // will first fade out the loading animation 
-            $("#loader").fadeOut("slow", function() {
-                // will fade out the whole DIV that covers the website.
-                $("#preloader").delay(300).fadeOut("slow");
-            }); 
-            
-            // for hero content animations 
-            $("html").removeClass('ss-preload');
-            $("html").addClass('ss-loaded');
-
+    //close menu when a link is clicked fo example
+    [].forEach.call(document.querySelectorAll('#navbarMenuCollapse a:not(.dropdown-toggle)'), function (el) {
+        el.addEventListener('click', function (event) {
+            bsCollapse.hide();
         });
-    };
-
-
-   /* pretty print
-    * -------------------------------------------------- */
-    const ssPrettyPrint = function() {
-        $('pre').addClass('prettyprint');
-        $( document ).ready(function() {
-            prettyPrint();
-        });
-    };
-
-
-   /* slick slider
-    * ------------------------------------------------------ */
-    const ssSlickSlider = function() {
-            
-        $('.intro-slider').slick({
-            arrows: false,
-            dots: false,
-            autoplay: true,
-            autoplaySpeed: 3000,
-            fade: true,
-            speed: 3000
-        });
-    };
-
-
-   /* modal
-    * ---------------------------------------------------- */ 
-    const ssModal = function() {
-
-        const modal = document.querySelector(".modal");
-        const trigger = document.querySelector(".modal-trigger");
-        const closeButton = document.querySelector(".modal__close");
-
-        function toggleModal() {
-            modal.classList.toggle("show-modal");
+    });
+    // close the menu when user click outside on the menu screen
+    var fullscreenMenuBg = document.querySelector('.nav-fullscreen-lg .nav-bg');
+    fullscreenMenuBg.addEventListener('click', function (event) {
+        bsCollapse.hide();
+        return false;
+    });
+    //2. toggle hide-header class of header on scoll down or up
+    var prevScrollpos = window.pageYOffset;
+    var pageHeader = document.querySelector('.navbar-top');
+    window.addEventListener("scroll", function () {
+        // window.onscroll = function() {
+        var currScrollpos = window.pageYOffset;
+        if (currScrollpos > prevScrollpos && currScrollpos > 64) {
+            if (!pageHeader.classList.contains('hide-header')) {
+                pageHeader.classList.add('hide-header');
+            };
+        } else {
+            pageHeader.classList.remove('hide-header');
         }
-        function windowOnClick(event) {
-            if (event.target === modal) {
-                toggleModal();
+        prevScrollpos = window.pageYOffset;
+
+        // add scrolled class to body if document is scrolled
+        if (window.pageYOffset > 4) {
+            if (!document.body.classList.contains('scrolled')) {
+                document.body.classList.add('scrolled');
             }
+        } else {
+            document.body.classList.remove('scrolled');
         }
-        function pressEsc(event) {
-            if (event.which=='27') {
-                modal.classList.remove("show-modal");
-            }
-        }
+    });
 
-        trigger.addEventListener("click", toggleModal);
-        closeButton.addEventListener("click", toggleModal);
-        window.addEventListener("click", windowOnClick);
-        window.addEventListener("keyup", pressEsc);
+    //3. custom vh (viewport height) unit to fix on resize or scroll on mobile
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    window.addEventListener("resize", function () {
+        // update on resize
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    })
 
-    };
+    //4. Swiper Slider
+    let swiperSliderSimpleA = new Swiper('.slider-simple-a.swiper-container', {
+        navigation: {
+            nextEl: '.swiper-container.slider-simple-a .slider-next',
+            prevEl: '.swiper-container.slider-simple-a .slider-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        loop: true,
+        grabCursor: true,
+        autoplay: {
+            delay: 5000,
+        },
+        spaceBetween: 0,
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        speed: 600, // Slide speed
+        // centeredSlidesBounds: true,
+    });
 
+    // Gallery Slider
+    let swiperSliderGalleryA = new Swiper('.slider-gallery-a.swiper-container', {
+        navigation: {
+            nextEl: '.swiper-container.slider-gallery-a .slider-next',
+            prevEl: '.swiper-container.slider-gallery-a .slider-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        loop: true,
+        grabCursor: true,
+        autoplay: {
+            delay: 5000,
+        },
+        spaceBetween: 0,
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        effect: 'fade',
+        speed: 600, // Slide speed
+        // centeredSlidesBounds: true,
+    });
 
-   /* final countdown
-    * ------------------------------------------------------ */
-    const ssFinalCountdown = function() {
+    let swiperSliderSimpleB = new Swiper('.slider-simple-b.swiper-container', {
+        // navigation: {
+        //     nextEl: '.swiper-container.slider-simple-b .slider-next',
+        //     prevEl: '.swiper-container.slider-simple-b .slider-prev',
+        // },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        loop: true,
+        grabCursor: true,
+        autoplay: {
+            delay: 5000,
+        },
+        effect: 'fade',
+    });
 
-        const finalDate = '2022/04/07';
-
-        $('.counter').countdown(finalDate)
-        .on('update.countdown finish.countdown', function(event) {
-
-            const str = '<div class=\"counter__time days\">%D&nbsp;<span>D</span></div>' +
-                        '<div class=\"counter__time hours\">%H&nbsp;<span>H</span></div>' +
-                        '<div class=\"counter__time minutes\">%M&nbsp;<span>M</span></div>' +
-                        '<div class=\"counter__time seconds\">%S&nbsp;<span>S</span></div>';
-                    
-            $(this).html(event.strftime(str));
-
+    //5. Scroll slider
+    try {
+        var scrollSlider = new ScrollSlider('.scroll-simple-a', {
+            scale1: 0.1
         });
-    };
-
-
-   /* tabs
-    * ---------------------------------------------------- */ 
-    const ssTabs = function() {
-
-        const $tabNavListItems = $("ul.tab-nav__list li");
-        const $tabContentItem  = $(".tab-content__item");
-
-        $tabContentItem.hide().first().show();
-
-        $tabNavListItems.on('click', function () {
-
-            $tabNavListItems.removeClass("active");
-            $(this).addClass("active");
-            $tabContentItem.hide();
-
-            const activeTab = $(this).attr("data-id");
-            $("#" + activeTab).fadeIn(1000);
-
-        });
+        scrollSlider.init();
+    }
+    catch (error) {
+        console.log('scroll-slider not available')
     }
 
-
-   /* alert boxes
-    * ------------------------------------------------------ */
-    const ssAlertBoxes = function() {
-
-        $('.alert-box').on('click', '.alert-box__close', function() {
-            $(this).parent().fadeOut(500);
-        }); 
-
-    };
-
-    
-   /* smooth scrolling
-    * ------------------------------------------------------ */
-    const ssSmoothScroll = function() {
-        
-        $('.smoothscroll').on('click', function (e) {
-            const target = this.hash;
-            const $target = $(target);
-            
-            e.preventDefault();
-            e.stopPropagation();
-
-            $('html, body').stop().animate({
-                'scrollTop': $target.offset().top
-            }, cfg.scrollDuration, 'swing').promise().done(function () {
-                window.location.hash = target;
-            });
+    try {
+        // Section Scroller
+        var sectionScroller = new SectionScroll('.sections-scroll ', {
+            sectionClass: 'section',
+            navDotContainer :'.nav-dot-menu',
+            changeOnSectionColor: '.change-on-section-color, .nav-dot-menu .nav-link'
         });
+        sectionScroller.init();
+    }
+    catch (error) {
+        console.log('sections-scroll not available')
+    }
+    /* var sectionScroller = new SectionScroll('.sections-scroll ', {
+        sectionClass: 'section',
+        navDotContainer :'.nav-dot-menu',
+        changeOnSectionColor: '.change-on-section-color, .nav-dot-menu .nav-link'
+    });
+    sectionScroller.init(); */
 
-    };
-
-
-   /* back to top
-    * ------------------------------------------------------ */
-    const ssBackToTop = function() {
-        
-        const pxShow      = 500;
-        const $goTopButton = $(".ss-go-top")
-
-        // Show or hide the button
-        if ($(window).scrollTop() >= pxShow) $goTopButton.addClass('link-is-visible');
-
-        $(window).on('scroll', function() {
-            if ($(window).scrollTop() >= pxShow) {
-                if(!$goTopButton.hasClass('link-is-visible')) $goTopButton.addClass('link-is-visible')
-            } else {
-                $goTopButton.removeClass('link-is-visible')
-            }
+    //6. Rellax parallax
+    try {
+        var rellax = new Rellax('.rellax', {
+            breakpoints: [576, 768, 1201]
         });
-    };
+    } catch (error) {
+        console.log('rellax-js not available')
+    }
 
+    //7. Scroll animation
+    try {
+        var scrollAnim = new ScrollAnim('.scroll-anim');
+        scrollAnim.init();
 
-   /* ajaxchimp
-    * ------------------------------------------------------ */
-    const ssAjaxChimp = function() {
-            
-        $('#mc-form').ajaxChimp({
-            language: 'es',
-            url: cfg.mailChimpURL
-        });
+    }
+    catch (error) {
+        console.log('scroll-anim not available')
+    }
 
-        // Mailchimp translation
-        //
-        //  Defaults:
-        //	 'submit': 'Submitting...',
-        //  0: 'We have sent you a confirmation email',
-        //  1: 'Please enter a value',
-        //  2: 'An email address must contain a single @',
-        //  3: 'The domain portion of the email address is invalid (the portion after the @: )',
-        //  4: 'The username portion of the email address is invalid (the portion before the @: )',
-        //  5: 'This email address looks fake or invalid. Please enter a real email address'
+    // 8. page loader
+    // document loaded, all script init executed, so hide loading screen
+    var pageLoader = document.querySelector('#page-loader');
+    if (pageLoader) {
+        pageLoader.classList.add('p-hidden');
+    }
+    document.body.classList.add('page-loaded');
 
-        $.ajaxChimp.translations.es = {
-            'submit': 'Submitting...',
-            0: '<i class="fas fa-check"></i> We have sent you a confirmation email',
-            1: '<i class="fas fa-exclamation-triangle"></i> You must enter a valid e-mail address.',
-            2: '<i class="fas fa-exclamation-triangle"></i> E-mail address is not valid.',
-            3: '<i class="fas fa-exclamation-triangle"></i> E-mail address is not valid.',
-            4: '<i class="fas fa-exclamation-triangle"></i> E-mail address is not valid.',
-            5: '<i class="fas fa-exclamation-triangle"></i> E-mail address is not valid.'
-        }
-    };
-
-
-   /* initialize
-    * ------------------------------------------------------ */
-    (function ssInit() {
-
-        ssPreloader();
-        ssPrettyPrint();
-        ssSlickSlider();
-        ssModal();
-        ssFinalCountdown();
-        ssTabs();
-        ssAlertBoxes();
-        ssSmoothScroll();
-        ssBackToTop();
-        ssAjaxChimp();
-
-    })();
-
-})(jQuery);
+});

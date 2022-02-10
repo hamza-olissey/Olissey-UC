@@ -1,0 +1,13 @@
+/* Dark mode: 
+ Background color : #2e2e2e;
+ Foregroud color : #f4f4f4 and #ffffff
+*/
+.section-color-1 {
+  --fg-color: #f4f4f4;
+  --bg-color: #2e2e2e;
+  background-color: var(--bg-color);
+  color: var(--fg-color); }
+  .section-color-1 .text-stroke {
+    -webkit-text-stroke: 1px black;
+    -webkit-text-stroke: 1px var(--fg-color);
+    color: transparent; }

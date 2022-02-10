@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="logo-dark" transform="translate(-64 -48)">
+    <circle id="Ellipse_1" data-name="Ellipse 1" cx="32" cy="32" r="32" transform="translate(64 48)" fill="#141516"/>
+    <text id="CS" transform="translate(76 91)" fill="#fff" font-size="30" font-family="SFProDisplay-Regular, SF Pro Display"><tspan x="0" y="0">CS</tspan></text>
+  </g>
+</svg>
