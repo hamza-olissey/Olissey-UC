@@ -1,9 +1,9 @@
 /*
-    Template name : Studiofix - Website template
+    Template name : Olissey - Website template
     Version : 1.0
     Author : Miradontsoa Andria
-    Website : http://highhay.com & http://cutekit.net
-    Support : support@cutekit.net
+    Website : http://Olissey.com 
+    Support : contact@olissey.net
 */
 /*
     TABLE OF CONTENT
@@ -5434,13 +5434,14 @@ body.scrolled .hero-item-b .hero-footer {
 @media screen and (max-width: 768px) {
     .olissey-logo {
     height: 100% !important;
-    width: 50% !important;
+    width: 70% !important;
     display: center !important;
     display: block !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    /* margin-left: auto !important; */
+    /* margin-right: auto !important; */
     height: auto!important;
     padding-top: -50px!important;
-    margin-top: -40px!important
+    margin-top: -40px!important;
+    padding-left: 35% !important;
     ;}
   }
