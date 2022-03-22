@@ -104,6 +104,14 @@
     :root {
       --section-margin-y: 8rem; } }
 
+
+.Logo-Chrome{
+
+/* height: 100%;
+width: 60%;
+padding-left: 40%; */
+}
+
 html {
   font-size: 16px; }
   html.smooth-scroll {
@@ -1043,8 +1051,8 @@ body.scrolled .hide-on-scroll {
       font-size: 1.25rem; }
       @media screen and (min-width: 992px) {
         .navbar-a .navbar-nav .nav-item {
-          font-size: 2rem;
-          line-height: 1;
+          font-size: 20px;
+          line-height: 1.6;
           margin-left: 0px;
           margin-right: 0px;
           margin-bottom: 1rem; } }
