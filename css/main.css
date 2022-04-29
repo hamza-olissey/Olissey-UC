@@ -105,12 +105,6 @@
       --section-margin-y: 8rem; } }
 
 
-.Logo-Chrome{
-
-/* height: 100%;
-width: 60%;
-padding-left: 40%; */
-}
 .color-navbar{
   color: white !important;
 }
@@ -5456,4 +5450,12 @@ body.scrolled .hero-item-b .hero-footer {
     margin-top: -40px!important;
     padding-left: 35% !important;
     ;}
+  }
+
+
+  .Author{
+    color: #afafaf;
+  }
+  .Author:hover{
+    color: black;
   }

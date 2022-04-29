@@ -18303,7 +18303,8 @@ body {
 }
 a,
 a:visited {
-  color: #fff;
+  /* color: #fff; */
+  color: #878787;
   text-decoration: none;
 }
 article header h1 a,
